@@ -4,42 +4,73 @@ import java.util.Observable;
 
 public class Optimisation extends Observable {
 
+    private int nbIteration;
     private int temperature;
     private int sizeListTaboo;
     private int sizePopulation;
+
     private int mutation; //a diviser par 100
 
 
     public Optimisation() {
-        this.temperature = 10;
-        this.mutation = 50;
-        this.sizeListTaboo = 10;
-        this.sizePopulation = 10;
+
+        temperature = 10;
+        mutation = 50;
+        sizeListTaboo = 10;
+        sizePopulation = 10;
     }
 
-    public void temperatureUpdate(int t){
-        temperature = t;
-        updated();
+    public int getNbIteration() {
+
+        return nbIteration;
     }
-    public void sizeListTabooUpdate(int t){
-        sizeListTaboo = t;
-        updated();
+
+    public int getTemperature() {
+
+        return temperature;
     }
-    public void SizePopulationUpdate(int t){
-        sizePopulation = t;
-        updated();
+
+    public int getSizeListTaboo() {
+
+        return sizeListTaboo;
     }
-    public void mutationUpdate(int t){
-        mutation = t;
+
+    public int getSizePopulation() {
+
+        return sizePopulation;
+    }
+
+    public int getMutation() {
+
+        return mutation/100;
+    }
+
+    public void setTemperature(int temperature) {
+
+        this.temperature = temperature;
         updated();
     }
 
+    public void setSizeListTaboo(int sizeListTaboo) {
 
-    private double probaMutation(){
-        return mutation/100d;
+        this.sizeListTaboo = sizeListTaboo;
+        updated();
+    }
+
+    public void setSizePopulation(int sizePopulation) {
+
+        this.sizePopulation = sizePopulation;
+        updated();
+    }
+
+    public void setMutation(int mutation) {
+
+        this.mutation = mutation;
+        updated();
     }
 
     private void updated(){
+
         setChanged();
         notifyObservers();
     }
