@@ -15,7 +15,7 @@ public class ControleurTabou extends Controleur {
 
         spinnerTabou.addChangeListener(
 
-                changeListener -> modele.setSizeListTaboo((int)spinnerTabou.getValue())
+                changeListener -> modele.setTailleListeTaboue((int)spinnerTabou.getValue())
         );
 
         add(new JLabel("Taboos: "));
