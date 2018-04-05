@@ -11,78 +11,120 @@ public class Individu {
 
     private int[] gene;
     private int fitness;
-    private int tailleGene;
+    private int nbTaches;
     private int nbProcesseurs;
-    private float mutation;
+    private int tailleGene;
+    private int charge;
 
     private ArrayList<Integer> idTaches;
 
     private Random random;
 
+    // Constructeur de création d'un individu aléatoire
     public Individu(Optimisation m) {
 
         modele = m;
 
         random = new Random();
 
-        tailleGene = modele.getNbTaches();
+        nbTaches = modele.getNbTaches();
         nbProcesseurs = modele.getNbProcesseurs();
 
-        idTaches = new ArrayList<>(tailleGene);
+        idTaches = new ArrayList<>(nbTaches);
 
-        for (int i = 0; i < tailleGene; i++) {
+        for (int i = 0; i < nbTaches; i++) {
 
             idTaches.add(i);
         }
 
         fitness = 0;
+        charge = nbTaches / nbProcesseurs;
 
-        // TODO: Améliorer la création des gènes
+        tailleGene = nbTaches + nbProcesseurs - 1;
+
         // Création du gène
-        gene = new int[tailleGene + nbProcesseurs];
+        gene = new int[tailleGene];
 
         int i = 0;
+        int j = 0;
 
         // Génération aléatoire du gène
-        System.out.print("Gene: [ ");
         while(!idTaches.isEmpty()) {
 
-            // Changement de core du CPU
-            if(random.nextFloat() < ((float)nbProcesseurs / 100)) {
+            if(j == charge) {
 
                 gene[i] = -1;
                 i++;
+                j = 0;
             }
+
             int rand = random.nextInt(idTaches.size());
             gene[i] = idTaches.get(rand);
-            idTaches.remove(rand);
-            System.out.print(gene[i] + " ");
+            idTaches.remove(Integer.valueOf(gene[i]));
             i++;
+            j++;
         }
-        System.out.print("]\n");
 
         calculFitness();
     }
 
-    public void mutation() {
+    // Constructeur de génération d'un individu à partir d'un croisement
+    // FIXME: Corriger la fonction de fusion du père et de la mère
+    public Individu(Optimisation m, Individu pere, Individu mere) {
+
+        modele = m;
+
+        random = new Random();
+
+        nbTaches = modele.getNbTaches();
+        nbProcesseurs = modele.getNbProcesseurs();
+
+        fitness = 0;
+        charge = nbTaches / nbProcesseurs;
+
+        tailleGene = nbTaches + nbProcesseurs - 1;
+
+        idTaches = new ArrayList<>(nbTaches);
+
+        for (int i = 0; i < nbTaches; i++) {
+
+            idTaches.add(i);
+        }
+
+        int pointDeCoupure = random.nextInt(tailleGene);
+
+        gene = new int[tailleGene];
+
+        for (int i = 0; i < pointDeCoupure; i++) {
+
+            gene[i] = pere.getBit(i);
+            idTaches.remove(Integer.valueOf(gene[i]));
+        }
+
+        for (int i = pointDeCoupure; i < gene.length; i++) {
+
+            if(idTaches.contains(mere.getBit(i)) || mere.getBit(i) == -1) {
+
+                gene[i] = mere.getBit(i);
+                idTaches.remove(Integer.valueOf(gene[i]));
+            }
+        }
+
+        if(random.nextFloat() < (float)modele.getMutation()/100) {
+
+            mutation();
+        }
+
+        calculFitness();
+    }
+
+    // FIXME: Crash lors du calcul de la fitness
+    private void mutation() {
 
         // Fonction de mutation simple
+        int pointDeMutation = random.nextInt(tailleGene);
 
-        int pointDeMutation = random.nextInt(tailleGene - 1);
-        System.out.println("Point de mutation: " + pointDeMutation);
-
-        System.out.println("Gene au point de mutation: " + gene[pointDeMutation]);
-
-        System.out.print("Avant mutation: [ ");
-        for (int i = 0; i < tailleGene; i++) {
-
-            System.out.print(gene[i] + " ");
-        }
-        System.out.println("]");
-
-        System.out.println("Fitness avant mutation: " + fitness);
-
-        if(pointDeMutation < tailleGene - 1) {
+        if (pointDeMutation < tailleGene - 1) {
 
             int temp = gene[pointDeMutation];
             gene[pointDeMutation] = gene[pointDeMutation + 1];
@@ -90,15 +132,6 @@ public class Individu {
         }
 
         calculFitness();
-
-        System.out.print("Après mutation: [ ");
-        for (int i = 0; i < tailleGene; i++) {
-
-            System.out.print(gene[i] + " ");
-        }
-        System.out.println("]");
-
-        System.out.println("Fitness Après mutation: " + fitness);
     }
 
     public void calculFitness() {
@@ -106,13 +139,14 @@ public class Individu {
         int fitnesses[] = new int[nbProcesseurs];
 
         int cpuCore = 0;
-        for (int i = 0; i < tailleGene; i++) {
+        for (int i = 0; i < nbTaches; i++) {
 
-            if(gene[i] == -1) {
+            while (gene[i] == -1) {
 
                 cpuCore++;
                 i++;
             }
+
             fitnesses[cpuCore] += modele.getTache(gene[i]).getDuree();
         }
 
@@ -130,5 +164,25 @@ public class Individu {
     public int getFitness() {
 
         return fitness;
+    }
+
+    public int getBit(int index) {
+
+        return gene[index];
+    }
+
+    @Override
+    public String toString() {
+
+        StringBuilder stringBuilder = new StringBuilder("[ ");
+
+        for (int i = 0; i < gene.length; i++) {
+
+            stringBuilder.append(gene[i] + " ");
+        }
+
+        stringBuilder.append("]");
+
+        return stringBuilder.toString();
     }
 }
