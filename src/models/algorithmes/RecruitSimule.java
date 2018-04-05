@@ -68,6 +68,15 @@ public class RecruitSimule {
         return bestSolution;
     }
 
+    /*
+        TODO:Ajouter le hill climbing aka trouver voisin optimal.
+        Refaire les probablilités pour que plus la temperature est élevée
+        plus les chances de prendre un voisin aleatoire est elevee;
+        plus la temperature baisse, plus la probabilité de prendre un voisin
+        optimal augmente.
+     */
+
+
     private int temp(double k, double kmax){
         internalTemperature =(int) (internalTemperature*(1-k/kmax));
         return internalTemperature;
