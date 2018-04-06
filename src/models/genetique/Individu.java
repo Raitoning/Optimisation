@@ -119,7 +119,7 @@ public class Individu {
 
         if(random.nextFloat() < (float)modele.getMutation()/100) {
 
-//            mutation();
+            mutation();
         }
 
         calculFitness();
@@ -130,12 +130,16 @@ public class Individu {
 
         // Fonction de mutation simple
         System.out.println("Mutation");
+
+        System.out.println("Avant mutation: " + toString());
         int pointDeMutation = random.nextInt(tailleGene - 1);
         int pointDeMutation2 = random.nextInt(tailleGene - 1);
 
         int temp = gene[pointDeMutation];
         gene[pointDeMutation] = gene[pointDeMutation2];
         gene[pointDeMutation2] = temp;
+
+        System.out.println("Après mutation: " + toString());
 
         calculFitness();
     }
@@ -145,7 +149,7 @@ public class Individu {
         int fitnesses[] = new int[nbProcesseurs];
 
         int cpuCore = 0;
-        for (int i = 0; i < nbTaches; i++) {
+        for (int i = 0; i < tailleGene; i++) {
 
             while (gene[i] == -1) {
 

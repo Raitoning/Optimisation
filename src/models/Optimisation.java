@@ -29,7 +29,7 @@ public class Optimisation extends Observable {
         nbIteration = 0;
 
         temperature = 10;
-        mutation = 50;
+        mutation = 100;
         tailleListeTaboue = 10;
         taillePopulation = 64;
         nbProcesseurs = 4;
