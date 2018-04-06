@@ -112,6 +112,17 @@ public class Optimisation extends Observable {
         updated();
     }
 
+    public void setNbTaches(int nbTaches) {
+
+        this.nbTaches = nbTaches;
+        updated();
+    }
+
+    public void setNbProcesseurs(int nbProcesseurs) {
+
+        this.nbProcesseurs = nbProcesseurs;
+    }
+
     public void setMutation(int mutation) {
 
         this.mutation = mutation;
@@ -164,7 +175,7 @@ public class Optimisation extends Observable {
         nbProcesseurs = processeurs;
         updated();
     }
-
+  
     private void updated(){
 
         setChanged();
