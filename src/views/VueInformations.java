@@ -33,7 +33,7 @@ public class VueInformations extends JPanel implements Observer {
     public void update(Observable o, Object arg) {
 
         nbIterations.setText("Nombre itération: " + modele.getNbIteration());
-//        meilConfig.setText("Meilleure configuration: ");
+        meilConfig.setText("Meilleure configuration: " + modele.getMeilleurValeur());
 //        evolValeur.setText("Evolution de la valeur: ");
     }
 }

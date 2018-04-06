@@ -15,7 +15,7 @@ public class Processeur {
         taches = (ArrayList<Tache>) p.taches.clone();
 
     }
-
+  
     public void ajouterTache(Tache t) {
 
         taches.add(t);
@@ -66,6 +66,4 @@ public class Processeur {
         }
         return sb.toString();
     }
-
-
 }
