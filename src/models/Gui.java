@@ -47,7 +47,7 @@ public class Gui extends JFrame {
 
 
         //4. Size the frame.
-        setSize(640, 480);
+        setSize(854, 480);
 
         //5. Show it.
         setVisible(true);

@@ -86,6 +86,8 @@ public class Individu {
 
         idTaches = new ArrayList<>(nbTaches);
 
+        int nbCpuUtilises = 1;
+
         for (int i = 0; i < nbTaches; i++) {
 
             idTaches.add(i);
@@ -97,14 +99,23 @@ public class Individu {
 
         for (int i = 0; i < pointDeCoupure; i++) {
 
+            if(pere.getBit(i) == -1) {
+
+                nbCpuUtilises++;
+            }
+
             gene[i] = pere.getBit(i);
             idTaches.remove(Integer.valueOf(gene[i]));
         }
 
         for (int i = pointDeCoupure; i < gene.length; i++) {
 
-            if(idTaches.contains(mere.getBit(i)) || mere.getBit(i) == -1) {
+            if(idTaches.contains(mere.getBit(i)) || (mere.getBit(i) == -1 && nbCpuUtilises < nbProcesseurs)) {
 
+                if(mere.getBit(i) == -1) {
+
+                    nbCpuUtilises++;
+                }
                 gene[i] = mere.getBit(i);
                 idTaches.remove(Integer.valueOf(gene[i]));
             } else {
