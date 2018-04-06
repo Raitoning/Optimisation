@@ -35,30 +35,35 @@ public class Tabou extends Algorithme{
     public void demarrer(){
 
         EtatTabou tmp = meilleur.meilleurVoisin();
+        int change = 0;
 
         nbiteration++;
-        System.out.println(meilleur.signatureEtat());
-        System.out.println(tmp.signatureEtat());
 
-        while(tmp != null ){
+        while(tmp != null && change < listeTabou.length*listeTabou.length){
             //ajout liste tabou
             listeTabou[nbiteration%listeTabou.length] = tmp;
 
 
             //si on a le meme etat que le meilleur deja trouvé alors on boucle, on peut arreter le programme
-            if(meilleur.signatureEtat().equals(tmp.signatureEtat()) || meilleur.estFinal())
+            if(meilleur.signatureEtat().equals(tmp.signatureEtat()) || meilleur.estFinal()) {
                 break;
+            }
             //sinon on garde en memoire le meilleur des 2
-            if(tmp.coutMax() < meilleur.coutMax())
+            if(tmp.coutMax() < meilleur.coutMax()) {
                 meilleur = tmp;
+                change = 0;
+            }
 
             tmp = tmp.meilleurVoisin();
 
+            change++;
             nbiteration++;
         }
 
-        System.out.println(meilleur.coutMax()+ " "+ nbiteration+ " " + meilleur.signatureEtat().equals(tmp.signatureEtat()));
-        System.out.println(meilleur.signatureEtat());
+        /*System.out.println(meilleur.coutMax()+ " "+ nbiteration+ " " + meilleur.signatureEtat().equals(tmp.signatureEtat()));
+        System.out.println(meilleur.signatureEtat());*/
+        modele.setNbIteration(nbiteration);
+        modele.setMeilleurValeur(meilleur.coutMax());
 
     }
 

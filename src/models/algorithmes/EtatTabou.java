@@ -68,12 +68,17 @@ public class EtatTabou {
         StringBuilder sb = new StringBuilder();
 
         for(int i =0; i < tableauCPU.length;i++){
-            sb.append("{");
-            for(int j = 0;j < tableauCPU[i].size()-1;j++){
-                sb.append(tableauCPU[i].get(j)+",");
+            if(tableauCPU[i].size() > 0) {
+                sb.append("{");
+                for (int j = 0; j < tableauCPU[i].size() - 1; j++) {
+                    sb.append(tableauCPU[i].get(j) + ",");
+                }
+                sb.append(tableauCPU[i].get(tableauCPU[i].size() - 1));
+                sb.append("}");
             }
-            sb.append(tableauCPU[i].get(tableauCPU[i].size()-1));
-            sb.append("}");
+            else{
+                sb.append("{}");
+            }
         }
 
         return sb.toString();
