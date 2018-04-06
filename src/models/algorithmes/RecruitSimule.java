@@ -80,6 +80,8 @@ public class RecruitSimule extends Algorithme{
                 bestCout = coutMax;
             }
             nbIter++;
+            modele.setNbIteration(nbIter);
+            modele.setMeilleurValeur(bestCout);
         }
         return bestSolution;
     }
