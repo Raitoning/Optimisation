@@ -6,12 +6,22 @@ import javax.swing.*;
 public class ControleurRecuit extends Controleur {
 
     private JSpinner spinnerTemperature;
+    private SpinnerNumberModel recuitSpinnerModel;
 
     public ControleurRecuit(Optimisation m) {
 
         super(m, "Recuit Simulé");
 
-        spinnerTemperature = new JSpinner(spinnerModel);
+        // Un nouveau SpinnerNumberModel plus adapté pour le recuit
+        recuitSpinnerModel = new SpinnerNumberModel(
+
+                100, //initial value also change in Optimisation
+                1,  //min
+                3000, //max
+                1   //step
+        );
+
+        spinnerTemperature = new JSpinner(recuitSpinnerModel);
 
         spinnerTemperature.addChangeListener(
 

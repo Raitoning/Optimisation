@@ -60,9 +60,9 @@ public class Processeur {
     @Override
     public String toString(){
         StringBuilder sb= new StringBuilder();
-        sb.append("Processeur de duree"+getDureeTotale()+":");
+        sb.append("Processeur de duree ").append(getDureeTotale()).append(":\n");
         for(Tache t:taches){
-            sb.append("\t"+taches.indexOf(t)+": "+t);
+            sb.append("\t").append(taches.indexOf(t)).append(": ").append(t);
         }
         return sb.toString();
     }

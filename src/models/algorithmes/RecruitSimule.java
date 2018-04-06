@@ -10,7 +10,7 @@ import java.util.Random;
 public class RecruitSimule {
 
     private Optimisation opt;
-    Random r;
+    private Random r;
     private int nbProc;
     private int nbTaches;
     private int initialTemperature;
@@ -66,21 +66,15 @@ public class RecruitSimule {
         nbIter = 0; //k = 0
         while ((nbIter<iterMax)&&(internalTemperature>0.1)){//eventually add (e>emax)
             random = r.nextDouble();
-            if (false ){//random<prob(1,internalTemperature)) {
-                newSolution = voisin(solution); //voisin aleatoire
-                newCoutMax = E(newSolution);
-            } else {
-                newSolution = voisinO(solution); // voisin ideal
+            newSolution = voisinO(solution); // voisin ideal
 
-                newCoutMax = E(newSolution);
-            }
+            newCoutMax = E(newSolution);
+
             if ((newCoutMax<coutMax)||(random<prob(newCoutMax-coutMax,temp()))){
                 solution = newSolution;
                 coutMax = newCoutMax;
             }
             if (coutMax<bestCout){
-                //System.out.println(nbIter+"---ENTRANCE-----");
-
                 bestSolution = solution;
                 bestCout = coutMax;
             }
@@ -88,14 +82,6 @@ public class RecruitSimule {
         }
         return bestSolution;
     }
-
-    /*
-        Refaire les probablilités pour que plus la temperature est élevée
-        plus les chances de prendre un voisin aleatoire est elevee;
-        plus la temperature baisse, plus la probabilité de prendre un voisin
-        optimal augmente.
-     */
-
 
     private double temp(){
         internalTemperature = (internalTemperature*(0.99d));
@@ -134,6 +120,7 @@ public class RecruitSimule {
         }
     }
 
+    //NOTE: Unused
     private ArrayList<Processeur> voisin(ArrayList<Processeur> z){
         ArrayList<Processeur> al= cloneALProc(z);
         Tache t = alTaches.get(r.nextInt(al.size()));//Random tache
@@ -173,7 +160,8 @@ public class RecruitSimule {
         //System.out.println("min:"+procmin+" max: "+proc);
 
         int delta = al.get(proc).getDureeTotale()-al.get(procmin).getDureeTotale();
-        //System.out.println("min:"+procmin+" max: "+proc+" delta:"+delta);
+        if (internalTemperature<initialTemperature/2d)
+            delta =delta/2;
         Tache t = al.get(proc).idealTache(delta); //prendre la tache qui equilibre le mieux les durees
 
         al.get(proc).retirerTache(t);
@@ -199,7 +187,7 @@ public class RecruitSimule {
         return al;
     }
 
-
+    //NOTE:Testing
     public void printState(ArrayList<Processeur> al){
         for(Processeur p:al){
             System.out.println(al.indexOf(p)+":"+p);
@@ -208,9 +196,9 @@ public class RecruitSimule {
 
     public static void main(String[] args){
         Optimisation modele=new Optimisation();
-        modele.setTemperature(300);
+        modele.setTemperature(30);
         RecruitSimule rs =new RecruitSimule(modele, 8, 120);
-        rs.printState(rs.algorithme(10000));
+        rs.printState(rs.algorithme());
 
     }
 
