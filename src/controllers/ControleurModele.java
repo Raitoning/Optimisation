@@ -2,6 +2,7 @@ package controllers;
 
 import models.Optimisation;
 import models.algorithmes.Genetique;
+import models.algorithmes.RecruitSimule;
 
 public class ControleurModele {
 
@@ -45,5 +46,10 @@ public class ControleurModele {
     public void algorithmeGenetique() {
 
         modele.setAlgorithme(new Genetique(modele));
+    }
+
+    public void recuitSimule() {
+
+        modele.setAlgorithme(new RecruitSimule(modele));
     }
 }

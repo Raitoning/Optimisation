@@ -23,7 +23,7 @@ public class VueRecuit extends VueAlgorithme {
         add(spinnerTemperature);
 
         boutonAlgorithme.addActionListener(
-                actionListener -> controleurModele.algorithmeGenetique()
+                actionListener -> controleurModele.recuitSimule()
         );
 
         add(Box.createVerticalGlue());

@@ -12,10 +12,10 @@ public class Processeur {
     }
 
     public Processeur(Processeur p){
-        taches = (ArrayList<Tache>) p.taches.clone();
 
+        taches = (ArrayList<Tache>) p.taches.clone();
     }
-  
+
     public void ajouterTache(Tache t) {
 
         taches.add(t);
@@ -44,12 +44,18 @@ public class Processeur {
     }
 
     public Tache idealTache(int duree){
+
         Tache result = taches.get(0);
+
         for (Tache t:taches){
+
             if (t.getDuree()==duree){
+
                 result = t;
             } else {
+
                 if ((Math.abs(result.getDuree())-Math.abs(duree))>(Math.abs(t.getDuree())-Math.abs(duree))){
+
                     result = t;
                 }
             }
@@ -59,11 +65,15 @@ public class Processeur {
 
     @Override
     public String toString(){
+
         StringBuilder sb= new StringBuilder();
         sb.append("Processeur de duree ").append(getDureeTotale()).append(":\n");
+
         for(Tache t:taches){
+
             sb.append("\t").append(taches.indexOf(t)).append(": ").append(t);
         }
+
         return sb.toString();
     }
 }

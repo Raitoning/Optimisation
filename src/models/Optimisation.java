@@ -47,6 +47,11 @@ public class Optimisation extends Observable {
 
             taches.add(new Tache(random.nextInt(100)));
         }
+
+        for (int i = 0; i < nbProcesseurs; i++) {
+
+            processeurs.add(new Processeur());
+        }
     }
 
     public int getNbIteration() {
@@ -166,11 +171,11 @@ public class Optimisation extends Observable {
     }
 
     public ArrayList<Tache> getTaches(){
-        return null;
+        return taches;
     }
 
     public ArrayList<Processeur> getProcessseurs(){
-        return null;
+        return processeurs;
     }
 
     private void updated(){
