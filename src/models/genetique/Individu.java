@@ -69,7 +69,6 @@ public class Individu {
     }
 
     // Constructeur de génération d'un individu à partir d'un croisement
-    // FIXME: Corriger la fonction de fusion du père et de la mère
     public Individu(Optimisation m, Individu pere, Individu mere) {
 
         modele = m;
@@ -136,21 +135,15 @@ public class Individu {
         calculFitness();
     }
 
-    // FIXME: Crash lors du calcul de la fitness
     private void mutation() {
 
         // Fonction de mutation simple
-        System.out.println("Mutation");
-
-        System.out.println("Avant mutation: " + toString());
         int pointDeMutation = random.nextInt(tailleGene - 1);
         int pointDeMutation2 = random.nextInt(tailleGene - 1);
 
         int temp = gene[pointDeMutation];
         gene[pointDeMutation] = gene[pointDeMutation2];
         gene[pointDeMutation2] = temp;
-
-        System.out.println("Après mutation: " + toString());
 
         calculFitness();
     }

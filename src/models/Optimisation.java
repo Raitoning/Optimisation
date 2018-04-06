@@ -1,6 +1,6 @@
 package models;
 
-import models.genetique.Individu;
+import models.algorithmes.Algorithme;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -14,28 +14,29 @@ public class Optimisation extends Observable {
     private int nbTaches;
     private int nbProcesseurs;
     private int taillePopulation;
+    private int nbIterationMax;
+    private int meilleurValeur;
 
     private ArrayList<Processeur> processeurs;
     private ArrayList<Tache> taches;
 
-    private ArrayList<Individu> population;
-
     private Random random;
 
-    private int mutation; //a diviser par 100
+    private Algorithme algorithme;
+
+    private int mutation;
 
     public Optimisation() {
 
         nbIteration = 0;
-
+        nbIterationMax = 10;
         temperature = 10;
-        mutation = 100;
+        mutation = 10;
         tailleListeTaboue = 10;
-        taillePopulation = 64;
         nbProcesseurs = 4;
         nbTaches = 16;
-
-//        Individu test = new Individu(this);
+        taillePopulation = 100;
+        meilleurValeur = 0;
 
         random = new Random();
 
@@ -46,96 +47,6 @@ public class Optimisation extends Observable {
         for (int i = 0; i < nbTaches; i++) {
 
             taches.add(new Tache(random.nextInt(100)));
-        }
-
-        algorithmeGenetique();
-    }
-
-    private void algorithmeGenetique() {
-
-        population = new ArrayList<>(taillePopulation);
-
-        int nbSelection = taillePopulation / 4;
-
-        // Génération aléatoire de la population
-        for (int i = 0; i < taillePopulation; i++) {
-
-            population.add(new Individu(this));
-        }
-
-
-        for (int generation = 0; generation < 10; generation++) {
-
-            System.out.println("Generation " + (generation + 1) + ": ");
-
-            // Séléction des meilleurs individus pour croisement
-            ArrayList<Individu> meilleurs = new ArrayList<>(nbSelection);
-
-            Individu selectionne = null;
-
-            for (int i = 0; i < nbSelection; i++) {
-
-                int fitness = Integer.MAX_VALUE;
-
-                for (int j = 0; j < population.size(); j++) {
-
-                    if(population.get(j).getFitness() < fitness) {
-
-                        selectionne = population.get(j);
-                        fitness = selectionne.getFitness();
-                    }
-                }
-
-                if(selectionne != null) {
-
-                    meilleurs.add(selectionne);
-                    population.remove(selectionne);
-                }
-            }
-
-            // Disparaition des pires individus
-            selectionne = null;
-
-            for (int i = 0; i < nbSelection; i++) {
-
-                int fitness = 0;
-
-                for (int j = 0; j < population.size(); j++) {
-
-                    if (population.get(j).getFitness() > fitness) {
-
-                        selectionne = population.get(j);
-                        fitness = selectionne.getFitness();
-                    }
-
-                    if (selectionne != null) {
-
-                        population.remove(selectionne);
-                    }
-                }
-            }
-
-            // Croisement des meilleurs individus
-            for (int i = 0; i < nbSelection; i++) {
-
-                Individu pere = meilleurs.get(random.nextInt(nbSelection));
-                Individu mere = meilleurs.get(random.nextInt(nbSelection));
-
-                population.add(new Individu(this, pere, mere));
-            }
-
-            // Réinsertions des anciens meilleurs individus
-            for (int i = 0; i < nbSelection; i++) {
-
-                population.add(meilleurs.get(i));
-            }
-
-            for (int i = 0; i < population.size(); i++) {
-
-                System.out.println(population.get(i).toString());
-                System.out.println("Fitness: " +
-                        population.get(i).getFitness());
-            }
         }
     }
 
@@ -174,6 +85,21 @@ public class Optimisation extends Observable {
         return mutation;
     }
 
+    public int getTaillePopulation() {
+
+        return taillePopulation;
+    }
+
+    public int getNbIterationMax() {
+
+        return nbIterationMax;
+    }
+
+    public int getMeilleurValeur() {
+
+        return meilleurValeur;
+    }
+
     public void setTemperature(int temperature) {
 
         this.temperature = temperature;
@@ -201,6 +127,41 @@ public class Optimisation extends Observable {
 
         this.mutation = mutation;
         updated();
+    }
+
+    public void setTaillePopulation(int taille) {
+
+        this.taillePopulation = taille;
+        updated();
+    }
+
+    public void setAlgorithme(Algorithme algo) {
+
+        algorithme = algo;
+        updated();
+    }
+
+    public void setNbIterationMax(int max) {
+
+        nbIterationMax = max;
+        updated();
+    }
+
+    public void setNbIteration(int iterations) {
+
+        nbIteration = iterations;
+        updated();
+    }
+
+    public void setMeilleurValeur(int valeur) {
+
+        meilleurValeur = valeur;
+        updated();
+    }
+
+    private void demarrerAlgo() {
+
+        algorithme.demarrer();
     }
 
     private void updated(){
