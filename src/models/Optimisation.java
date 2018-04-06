@@ -164,6 +164,18 @@ public class Optimisation extends Observable {
         algorithme.demarrer();
     }
 
+    public void setNbTaches(int taches) {
+
+        nbTaches = taches;
+        updated();
+    }
+
+    public void setNbProcesseurs(int processeurs) {
+
+        nbProcesseurs = processeurs;
+        updated();
+    }
+  
     private void updated(){
 
         setChanged();
