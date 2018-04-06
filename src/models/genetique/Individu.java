@@ -107,12 +107,19 @@ public class Individu {
 
                 gene[i] = mere.getBit(i);
                 idTaches.remove(Integer.valueOf(gene[i]));
+            } else {
+
+                if(!idTaches.isEmpty()) {
+
+                    gene[i] = idTaches.get(0);
+                    idTaches.remove(0);
+                }
             }
         }
 
         if(random.nextFloat() < (float)modele.getMutation()/100) {
 
-            mutation();
+//            mutation();
         }
 
         calculFitness();
@@ -122,14 +129,13 @@ public class Individu {
     private void mutation() {
 
         // Fonction de mutation simple
-        int pointDeMutation = random.nextInt(tailleGene);
+        System.out.println("Mutation");
+        int pointDeMutation = random.nextInt(tailleGene - 1);
+        int pointDeMutation2 = random.nextInt(tailleGene - 1);
 
-        if (pointDeMutation < tailleGene - 1) {
-
-            int temp = gene[pointDeMutation];
-            gene[pointDeMutation] = gene[pointDeMutation + 1];
-            gene[pointDeMutation + 1] = temp;
-        }
+        int temp = gene[pointDeMutation];
+        gene[pointDeMutation] = gene[pointDeMutation2];
+        gene[pointDeMutation2] = temp;
 
         calculFitness();
     }
