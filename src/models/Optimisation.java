@@ -127,6 +127,7 @@ public class Optimisation extends Observable {
     public void setAlgorithme(Algorithme algo) {
 
         algorithme = algo;
+        algo.demarrer();
         updated();
     }
 

@@ -107,6 +107,7 @@ public class Genetique extends Algorithme {
                 }
             }
 
+            modele.setNbIteration(generation + 1);
             modele.setMeilleurValeur(meilleur);
         }
     }

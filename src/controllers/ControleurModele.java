@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Optimisation;
+import models.algorithmes.Genetique;
 
 public class ControleurModele {
 
@@ -43,6 +44,6 @@ public class ControleurModele {
 
     public void algorithmeGenetique() {
 
-
+        modele.setAlgorithme(new Genetique(modele));
     }
 }
