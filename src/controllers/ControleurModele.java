@@ -3,6 +3,7 @@ package controllers;
 import models.Optimisation;
 import models.algorithmes.Genetique;
 import models.algorithmes.RecruitSimule;
+import models.algorithmes.Tabou;
 
 public class ControleurModele {
 
@@ -51,5 +52,10 @@ public class ControleurModele {
     public void recuitSimule() {
 
         modele.setAlgorithme(new RecruitSimule(modele));
+    }
+
+    public void rechercheTabou() {
+
+        modele.setAlgorithme(new Tabou(modele));
     }
 }

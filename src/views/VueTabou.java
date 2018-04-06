@@ -23,7 +23,7 @@ public class VueTabou extends VueAlgorithme {
         add(spinnerTabou);
 
         boutonAlgorithme.addActionListener(
-                actionListener -> controleurModele.algorithmeGenetique()
+                actionListener -> controleurModele.rechercheTabou()
         );
         add(Box.createVerticalGlue());
         add(boutonAlgorithme);
