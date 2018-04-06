@@ -13,7 +13,7 @@ public class ControleurModele {
 
     public void setSizePopulation(int valeur) {
 
-        modele.setSizePopulation(valeur);
+        modele.setTaillePopulation(valeur);
     }
 
     public void setMutation(int valeur) {
@@ -28,7 +28,7 @@ public class ControleurModele {
 
     public void setSizeListTaboo(int valeur) {
 
-        modele.setSizeListTaboo(valeur);
+        modele.setTailleListeTaboue(valeur);
     }
 
     public void setNbTaches(int valeur) {
