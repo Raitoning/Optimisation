@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Observable;
 
 public class Optimisation extends Observable {
@@ -67,6 +68,14 @@ public class Optimisation extends Observable {
 
         this.mutation = mutation;
         updated();
+    }
+
+    public ArrayList<Tache> getTaches(){
+        return null;
+    }
+
+    public ArrayList<Processeur> getProcessseurs(){
+        return null;
     }
 
     private void updated(){

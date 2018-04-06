@@ -7,9 +7,8 @@ import models.Tache;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class RecruitSimule {
+public class RecruitSimule extends Algorithme{
 
-    private Optimisation opt;
     private Random r;
     private int nbProc;
     private int nbTaches;
@@ -19,28 +18,29 @@ public class RecruitSimule {
     private ArrayList<Tache> alTaches;
 
 
-
-    private RecruitSimule(Optimisation opt) {
-        this.opt = opt;
+    public RecruitSimule(Optimisation opt) {
+        super(opt);
         initialTemperature = opt.getTemperature();
         r = new Random();
-    }
-
-    public RecruitSimule(Optimisation opt,ArrayList<Processeur> alProc, ArrayList<Tache> alTaches) {
-        this(opt);
-        this.alProc = alProc;
-        this.alTaches = alTaches;
+        this.alProc = modele.getProcessseurs();
+        this.alTaches = modele.getTaches();
         this.nbTaches = alTaches.size();
         this.nbProc = alProc.size();
     }
 
     public RecruitSimule(Optimisation opt,int nbProc, int nbTaches) {
-        this(opt);
-        this.nbProc =nbProc;
+        super(opt);
+        initialTemperature = opt.getTemperature();
+        r = new Random();this.nbProc =nbProc;
         this.nbTaches =nbTaches;
         this.alProc = new ArrayList<>();
         this.alTaches = new ArrayList<>();
         initTaches();
+    }
+
+    @Override
+    public void demarrer() {
+        algorithme();
     }
 
     public ArrayList<Processeur> algorithme() {
@@ -51,21 +51,22 @@ public class RecruitSimule {
         ArrayList<Processeur> solution, newSolution, bestSolution; // s, sn, g
         int coutMax, newCoutMax,bestCout, nbIter;
         double random;
-        boolean prob;
         initialAssignment(); //s0
         solution = cloneALProc();//s=s0
         bestSolution = solution; // g = s0;
         coutMax = E (solution); // e = E(s)
         bestCout = coutMax;      // = E(bestSolution); // m = E(g
 
+        /*
         System.out.println("-------INITIAL--------");
         printState(bestSolution);
         System.out.println("----------------------");
-
+        */
 
         nbIter = 0; //k = 0
         while ((nbIter<iterMax)&&(internalTemperature>0.1)){//eventually add (e>emax)
             random = r.nextDouble();
+
             newSolution = voisinO(solution); // voisin ideal
 
             newCoutMax = E(newSolution);
@@ -198,7 +199,7 @@ public class RecruitSimule {
         Optimisation modele=new Optimisation();
         modele.setTemperature(30);
         RecruitSimule rs =new RecruitSimule(modele, 8, 120);
-        rs.printState(rs.algorithme());
+        //rs.printState(rs.algorithme());
 
     }
 
