@@ -1,6 +1,5 @@
 package models;
 
-import controllers.Controleurs;
 import views.VueInformations;
 import javax.swing.*;
 import java.awt.*;
