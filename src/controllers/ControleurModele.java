@@ -58,4 +58,9 @@ public class ControleurModele {
 
         modele.setAlgorithme(new Tabou(modele));
     }
+
+    public void setIterationMax(int valeur) {
+
+        modele.setNbIterationMax(valeur);
+    }
 }

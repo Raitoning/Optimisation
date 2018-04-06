@@ -11,6 +11,7 @@ public class VueModele extends JPanel {
 
     private JSpinner jSpinnerTaches;
     private JSpinner jSpinnerProcesseurs;
+    private JSpinner jSpinnerIterations;
 
     public VueModele(ControleurModele c) {
 
@@ -41,5 +42,16 @@ public class VueModele extends JPanel {
 
         add(new Label("Nombre processeurs: "));
         add(jSpinnerProcesseurs);
+
+        spinnerModel = new SpinnerNumberModel(10, 1, 10000, 1);
+
+        jSpinnerIterations = new JSpinner(spinnerModel);
+
+        jSpinnerIterations.addChangeListener(
+                changeListener -> controleurModele.setIterationMax((int)jSpinnerIterations.getValue())
+        );
+
+        add(new Label("itérations max: "));
+        add(jSpinnerIterations);
     }
 }

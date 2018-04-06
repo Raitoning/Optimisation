@@ -1,8 +1,6 @@
 package models.algorithmes;
 
 import models.Optimisation;
-import models.algorithmes.Algorithme;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 public class Tabou extends Algorithme{
 
@@ -39,7 +37,7 @@ public class Tabou extends Algorithme{
 
         nbiteration++;
 
-        while(tmp != null && change < listeTabou.length*listeTabou.length){
+        while(tmp != null && change < listeTabou.length*listeTabou.length && nbiteration < modele.getNbIterationMax()){
             //ajout liste tabou
             listeTabou[nbiteration%listeTabou.length] = tmp;
 
@@ -60,8 +58,6 @@ public class Tabou extends Algorithme{
             nbiteration++;
         }
 
-        /*System.out.println(meilleur.coutMax()+ " "+ nbiteration+ " " + meilleur.signatureEtat().equals(tmp.signatureEtat()));
-        System.out.println(meilleur.signatureEtat());*/
         modele.setNbIteration(nbiteration);
         modele.setMeilleurValeur(meilleur.coutMax());
 
