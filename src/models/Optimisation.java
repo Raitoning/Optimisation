@@ -1,7 +1,6 @@
 package models;
 
 import models.algorithmes.Algorithme;
-
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
@@ -164,6 +163,14 @@ public class Optimisation extends Observable {
 
         nbProcesseurs = processeurs;
         updated();
+    }
+
+    public ArrayList<Tache> getTaches(){
+        return null;
+    }
+
+    public ArrayList<Processeur> getProcessseurs(){
+        return null;
     }
 
     private void updated(){

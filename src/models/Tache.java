@@ -13,4 +13,9 @@ public class Tache {
 
         return duree;
     }
+
+    @Override
+    public String toString(){
+        return "Tache de duree: "+duree;
+    }
 }
