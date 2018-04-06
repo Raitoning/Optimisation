@@ -12,12 +12,21 @@ public class VueRecuit extends VueAlgorithme {
 
         super(m, c, "Recuit Simulé");
 
-        spinnerTemperature = new JSpinner(spinnerModel);
+        SpinnerNumberModel recuitSpinnerModel = new SpinnerNumberModel(
+
+                100, //initial value also change in Optimisation
+                0,  //min
+                3000, //max
+                1   //step
+        );
+
+        spinnerTemperature = new JSpinner(recuitSpinnerModel);
 
         spinnerTemperature.addChangeListener(
 
                 changeListener -> controleurModele.setTemperature((int) spinnerTemperature.getValue())
         );
+
 
         add(new JLabel("Température: "));
         add(spinnerTemperature);
