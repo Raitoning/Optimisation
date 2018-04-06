@@ -8,6 +8,8 @@ public class Optimisation extends Observable {
     private int temperature;
     private int sizeListTaboo;
     private int sizePopulation;
+    private int nbTaches;
+    private int nbProcesseurs;
 
     private int mutation; //a diviser par 100
 
@@ -18,6 +20,10 @@ public class Optimisation extends Observable {
         mutation = 50;
         sizeListTaboo = 10;
         sizePopulation = 10;
+        nbProcesseurs = 10;
+        nbTaches = 10;
+
+        updated();
     }
 
     public int getNbIteration() {
@@ -66,6 +72,18 @@ public class Optimisation extends Observable {
     public void setMutation(int mutation) {
 
         this.mutation = mutation;
+        updated();
+    }
+
+    public void setNbTaches(int taches) {
+
+        nbTaches = taches;
+        updated();
+    }
+
+    public void setNbProcesseurs(int processeurs) {
+
+        nbProcesseurs = processeurs;
         updated();
     }
 

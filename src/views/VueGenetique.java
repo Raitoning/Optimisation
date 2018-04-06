@@ -1,15 +1,16 @@
-package controllers;
+package views;
 
+import controllers.ControleurModele;
 import models.Optimisation;
 import javax.swing.*;
 
-public class ControleurGenetique extends Controleur {
+public class VueGenetique extends VueAlgorithme {
 
     private SpinnerNumberModel mutationSpinnerNumberModel;
 
-    public ControleurGenetique(Optimisation m) {
+    public VueGenetique(Optimisation m, ControleurModele c) {
 
-        super(m, "Algorithme Génétique");
+        super(m, c, "Algorithme Génétique");
 
         // On remplace le layout par défaut de Controleur par un plus adapté
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -18,7 +19,7 @@ public class ControleurGenetique extends Controleur {
 
         spinnerPopulation.addChangeListener(
 
-                changeListener -> modele.setSizePopulation((int)spinnerPopulation.getValue())
+                changeListener -> controleurModele.setSizePopulation((int)spinnerPopulation.getValue())
         );
 
         add(new JLabel("Population: "));
@@ -37,10 +38,16 @@ public class ControleurGenetique extends Controleur {
 
         spinnerMutation.addChangeListener(
 
-                changeListener -> modele.setMutation((int)spinnerMutation.getValue())
+                changeListener -> controleurModele.setMutation((int)spinnerMutation.getValue())
         );
 
-        add(new JLabel("Mutation: "));
+        add(new JLabel("Mutation (%): "));
         add(spinnerMutation);
+
+        boutonAlgorithme.addActionListener(
+                actionListener -> controleurModele.algorithmeGenetique()
+        );
+
+        add(boutonAlgorithme);
     }
 }

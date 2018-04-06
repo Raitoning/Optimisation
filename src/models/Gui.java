@@ -1,6 +1,6 @@
 package models;
 
-import controllers.Controleurs;
+import views.PanneauAlgorithmes;
 import views.VueInformations;
 import javax.swing.*;
 import java.awt.*;
@@ -14,9 +14,20 @@ public class Gui extends JFrame {
     private JMenuItem jMenuItem;
 
     private VueInformations vueInformations;
-    private Controleurs controleurs;
+    private PanneauAlgorithmes panneauAlgorithmes;
 
     public Gui(Optimisation m) {
+
+        try {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            // If Nimbus is not available, you can set the GUI to another look and feel.
+        }
 
         modele = m;
 
@@ -34,7 +45,7 @@ public class Gui extends JFrame {
 
         modele.addObserver(vueInformations);
 
-        controleurs = new Controleurs(modele);
+        panneauAlgorithmes = new PanneauAlgorithmes(modele);
 
         //2. Optional: What happens when the frame closes?
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,12 +53,13 @@ public class Gui extends JFrame {
         setJMenuBar(jMenuBar);
 
         //3. Create components and put them in the frame.
-        add(vueInformations, BorderLayout.EAST);
-        add(controleurs, BorderLayout.SOUTH);
+        add(vueInformations, BorderLayout.CENTER);
+        add(panneauAlgorithmes, BorderLayout.SOUTH);
 
 
         //4. Size the frame.
-        setSize(640, 480);
+//        setSize(854, 480);
+        pack();
 
         //5. Show it.
         setVisible(true);
