@@ -43,4 +43,29 @@ public class Processeur {
         return taches.contains(t);
     }
 
+    public Tache idealTache(int duree){
+        Tache result = taches.get(0);
+        for (Tache t:taches){
+            if (t.getDuree()==duree){
+                result = t;
+            } else {
+                if ((Math.abs(result.getDuree())-Math.abs(duree))>(Math.abs(t.getDuree())-Math.abs(duree))){
+                    result = t;
+                }
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder sb= new StringBuilder();
+        sb.append("Processeur de duree"+getDureeTotale()+":");
+        for(Tache t:taches){
+            sb.append("\t"+taches.indexOf(t)+": "+t);
+        }
+        return sb.toString();
+    }
+
+
 }
