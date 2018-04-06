@@ -4,7 +4,7 @@ import models.Optimisation;
 
 public abstract class Algorithme {
 
-    private Optimisation modele;
+    protected Optimisation modele;
 
     public Algorithme(Optimisation m) {
 
